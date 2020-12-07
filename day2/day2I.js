@@ -1,33 +1,37 @@
 const fs = require('fs');
+const _ = require('lodash');
 
-const array = fs.readFileSync('D:\\Eigene-Dateien\\Dokumente\\codeventure\\day2\\input2.txt','utf8');
-console.log(typeof array);
-const stingOfArray= array.replace(/\r?\n|\r/, ',');
-console.log(stingOfArray);
+const replaceType = '\r\n';
+const regEc = new RegExp(replaceType, 'g');
+
+const array = fs.readFileSync('D:\\Eigene-Dateien\\Dokumente\\codeventure\\day2\\input.txt', 'utf8');
+const stingOfArray = array.replace(regEc, ',');
 const array2 = stingOfArray.split(',');
 
-const min = 0;
-const max = 0;
-const charecter = '';
-const password ='';
-const corectPW= 0;
+let min = 0;
+let max = 0;
+let charecter = '';
+let password = '';
+let corectPW = 0;
 
-for(const entry of array2){ 
-    console.log(typeof entry);
+for (const entry of array2) {
     console.log(entry);
-    const spiltEntry = entry.split(' ',2); 
-    console.log(spiltEntry);
-        const numbers = spiltEntry.split('-')[0];
-        console.log(numbers);
-            min = numbers[0];
-            max =numbers[1];
-        charecter = spiltEntry[1].toString;
-        password= spiltEntry[2].toString;
- 
-    const numberOfChar = password.match(new RegExp(charecter,'g'));
-    if(numberOfChar <=min& numberOfChar >=max){
+    const spiltEntry = entry.split(' ', 3);
+    const numbers = spiltEntry[0].split('-', 2);
+    min = numbers[0];
+    max = numbers[1];
+
+    charecter = spiltEntry[1];
+    charecter = charecter.replace(':', '');
+    password = spiltEntry[2];
+
+    var regex = new RegExp(charecter, 'g');
+
+    let numberOfChar = 0;
+    let charsInSplit = password.match(regex);
+
+    if ((_.size(charsInSplit) <= min) & (numberOfChar >= max)) {
         corectPW++;
     }
 }
 console.log(corectPW);
-
